@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 echo "Clean mytpm1"
 rm -rf /tmp/mytpm1; mkdir /tmp/mytpm1

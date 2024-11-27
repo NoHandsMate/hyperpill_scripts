@@ -14,7 +14,7 @@ echo "swtpm started"
 echo "Wanna start qemu?"
 read -n 1 -p "Press a key to continue"
 
-qemu-9.0.0/build/qemu-system-x86_64 -machine q35 -accel kvm -m 4G \
+qemu-9.0.0/build/qemu-system-x86_64 -machine q35 -accel kvm -m 1G \
     -device ac97,audiodev=snd0 -audiodev none,id=snd0 \
     -device cs4231a,audiodev=snd1 -audiodev none,id=snd1 \
     -device intel-hda,id=hda0 -device hda-output,bus=hda0.0 -device hda-micro,bus=hda0.0 -device hda-duplex,bus=hda0.0 \

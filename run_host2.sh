@@ -14,11 +14,11 @@ echo "swtpm started"
 echo "Wanna start qemu?"
 read -n 1 -p "Press a key to continue"
 
-../qemu-9.0.0/build/qemu-system-x86_64 -machine q35 -accel kvm -m 1G \
-    -device ac97 -audio none,id=snd0 \
-    -device cs4231a -audio none,id=snd1 \
+qemu-8.0.0/build/qemu-system-x86_64 -machine q35 -accel kvm -m 4G \
+    -device ac97,audiodev=snd0 -audiodev none,id=snd0 \
+    -device cs4231a,audiodev=snd1 -audiodev none,id=snd1 \
     -device intel-hda,id=hda0 -device hda-output,bus=hda0.0 -device hda-micro,bus=hda0.0 -device hda-duplex,bus=hda0.0 \
-    -device sb16 -audio none,id=snd2 \
+    -device sb16,audiodev=snd2 -audiodev none,id=snd2 \
     -drive file=null-co://,if=none,format=raw,id=disk0 -drive file=null-co://,if=none,format=raw,id=disk1 \
     -drive file=null-co://,if=none,format=raw,id=disk2 -drive file=null-co://,if=none,format=raw,id=disk3 \
     -drive file=null-co://,if=none,format=raw,id=disk4 -drive file=null-co://,if=none,format=raw,id=disk5 \
@@ -56,4 +56,4 @@ read -n 1 -p "Press a key to continue"
     -tpmdev emulator,id=tpm0,chardev=chrtpm -device tpm-tis,tpmdev=tpm0 \
     -object cryptodev-backend-builtin,id=cryptodev0 -device virtio-crypto-pci,id=crypto0,cryptodev=cryptodev0 \
     -drive file=null-co://,if=none,id=nvm -device nvme,serial=deadbeef,drive=nvm \
-    -monitor stdio -append console=ttyS0 -kernel bzImage -initrd rootfs.cpio.gz
+    -append console=ttyS0 -kernel bzImage -initrd rootfs.cpio.gz -serial stdio -monitor telnet:127.0.0.1:55556,server,nowait
